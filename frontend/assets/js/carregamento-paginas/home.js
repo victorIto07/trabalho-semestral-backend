@@ -55,12 +55,12 @@ const carregarGrid = async (filtro) => {
     }
     else if (filtro) {
       contatos = contatos.filter(contato =>
-        contato.nome == filtro ||
+        contato.name == filtro ||
         contato.email == filtro ||
-        contato.telefone == filtro ||
-        contato.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+        contato.phone_number == filtro ||
+        contato.name.toLowerCase().includes(filtro.toLowerCase()) ||
         contato.email.toLowerCase().includes(filtro.toLowerCase()) ||
-        contato.telefone.toLowerCase().includes(filtro.toLowerCase())
+        contato.phone_number.toLowerCase().includes(filtro.toLowerCase())
       );
 
       if (!contatos.length) {

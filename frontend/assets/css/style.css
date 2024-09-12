@@ -448,11 +448,11 @@ body {
 }
 
 .contato-foto:not(.home) img {
-  background-image: url('../assets/img/profile.png');
+  background-image: url('/assets/img/profile.png');
 }
 
 .contato-foto.home img {
-  background-image: url('assets/img/profile.png');
+  background-image: url('/assets/img/profile.png');
 }
 
 .contato-form> :not([hidden])~ :not([hidden]) {

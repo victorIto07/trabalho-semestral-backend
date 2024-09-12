@@ -23,7 +23,7 @@ export const chamadaAPI = (
   body
 ) => {
   return new Promise(async (resolve, reject) => {
-    const { url, metodo } = SERVICOS[servico]
+    let { url, metodo } = SERVICOS[servico]
 
     if (!url)
       reject('endpoint invalido');
@@ -49,7 +49,6 @@ export const chamadaAPI = (
         requisicao_parametros['headers'] = {
           "Content-Type": "application/json",
         };
-        requisicao_parametros['redirect'] = 'follow';
       }
 
       const res = await fetch(url, requisicao_parametros);
@@ -97,34 +96,32 @@ export const Logon = async (dados_logon) => {
 }
 
 export const BuscarListaContato = async () => {
-  const dados_contatos = await chamadaAPI('BuscarContatos');
-  const { contatos } = dados_contatos;
-
+  const contatos = await chamadaAPI('BuscarContatos');
   return contatos;
 }
 
 export const BuscarContato = async (id) => {
   if (!id) throw new Error('informe o id do usuário');
 
-  const dados_contato = await chamadaAPI('BuscarContato', { id });
-  if (!dados_contato) throw new Error('erro ao buscar usuário');
+  const contato = await chamadaAPI('BuscarContato', { id });
+  if (!contato) throw new Error('erro ao buscar usuário');
 
-  return dados_contato.contato[0];
+  return contato;
 }
 
-export const CadastrarContato = async ({ nome, email, telefone, image }) => {
-  if (!(nome && email && telefone && image))
+export const CadastrarContato = async ({ name, email, phone_number, image_url }) => {
+  if (!(name && email && phone_number && image_url))
     throw new Error('dados do usuário inválidos');
 
-  return await chamadaAPI('CadastrarContato', null, { nome, email, telefone, image });
+  return await chamadaAPI('CadastrarContato', null, { name, email, phone_number, image_url });
 }
 
-export const AtualizarContato = async ({ id, nome, email, telefone, image }) => {
-  if (!(nome && email && telefone && image && id))
+export const AtualizarContato = async ({ id, name, email, phone_number, image_url }) => {
+  if (!(name && email && phone_number && image_url && id))
     throw new Error('dados do usuário inválidos');
 
 
-  return await chamadaAPI('AtualizarContato', { id }, { nome, email, telefone, image });
+  return await chamadaAPI('AtualizarContato', { id }, { name, email, phone_number, image_url });
 }
 
 export const ExcluirContato = async (id) => {

@@ -32,12 +32,12 @@ const prepararMudancasFoto = () => {
   const _botao_editar_foto = document.getElementById('botao-editar-foto');
 
   _botao_editar_foto.addEventListener('click', () => {
-    const _field_foto = document.getElementById('input-custom-image');
+    const _field_foto = document.getElementById('input-custom-image_url');
     _field_foto.classList.toggle('hidden');
     _input_link_foto.focus();
   });
 
-  const _input_link_foto = document.getElementById('input-image');
+  const _input_link_foto = document.getElementById('input-image_url');
 
   const debounceLinkFoto = debounce((link) => {
     const _foto = document.getElementById('foto');
