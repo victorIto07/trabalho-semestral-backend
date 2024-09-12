@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await carregarContato(id);
 
+  prepararMudancasInputs();
   prepararMudancasFoto();
   prepararSalvar();
   prepararExclusao(id);
@@ -34,6 +35,7 @@ const prepararMudancasFoto = () => {
   _botao_editar_foto.addEventListener('click', () => {
     const _field_foto = document.getElementById('input-custom-image_url');
     _field_foto.classList.toggle('hidden');
+    _field_foto.nextElementSibling.classList.toggle('hidden');
     _input_link_foto.focus();
   });
 
@@ -50,27 +52,74 @@ const prepararMudancasFoto = () => {
   });
 }
 
+const prepararMudancasInputs = () => {
+  const _form = document.getElementById('formulario-cadastro');
+  const inputs = [..._form.querySelectorAll('.input-container input')];
+
+  for (let input of inputs) {
+    let input_max_len = input.getAttribute('data-max-len');
+    if (!input_max_len) continue;
+
+    input_max_len = parseInt(input_max_len);
+
+    const label_tamanho = input.parentElement.nextElementSibling;
+
+    input.addEventListener('input', () => {
+      const tamanho_atual = input.value.length;
+      label_tamanho.innerText = `${tamanho_atual}/${input_max_len}`;
+
+      if (tamanho_atual > input_max_len) {
+        input.parentElement.classList.add('is-invalid');
+      } else {
+        input.parentElement.classList.remove('is-invalid');
+      }
+    });
+
+  }
+}
+
 const exibirSpinner = () => document.getElementById('card-cadastro-contato').appendChild(carregamentoSpinner());
+
+const formIsValid = () => {
+  const _form = document.getElementById('formulario-cadastro');
+  const inputs = [..._form.querySelectorAll('.input-container input')];
+
+  for (let input of inputs) {
+    let input_max_len = input.getAttribute('data-max-len');
+    if (!input_max_len) continue;
+
+    input_max_len = parseInt(input_max_len);
+    const input_len = input.value.length;
+
+    if (input_len > input_max_len)
+      return false
+  }
+
+  return true;
+}
 
 const prepararSalvar = () => {
   const _form = document.getElementById('formulario-cadastro');
   _form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
     const _spinner_loader = exibirSpinner();
 
-    try {
-      const dados_contato = formData({ form: _form });
+    if (formIsValid()) {
+      try {
+        const dados_contato = formData({ form: _form });
 
-      let retorno_api;
-      if (dados_contato.id)
-        retorno_api = await AtualizarContato(dados_contato);
-      else
-        retorno_api = await CadastrarContato(dados_contato);
+        let retorno_api;
+        if (dados_contato.id)
+          retorno_api = await AtualizarContato(dados_contato);
+        else
+          retorno_api = await CadastrarContato(dados_contato);
 
-      navigate('/');
-    } catch (e) {
-      document.getElementById('erro-requisicao').innerText = '* ' + e.message || e;
+        navigate('/');
+      } catch (e) {
+        document.getElementById('erro-requisicao').innerText = '* ' + e.message || e;
+      }
+    } else {
+      alert('Preencha os campos corretamente');
     }
 
     _spinner_loader.remove();

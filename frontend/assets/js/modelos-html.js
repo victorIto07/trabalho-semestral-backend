@@ -1,20 +1,17 @@
 import { createElementFromString } from './util.js';
 
 // COMPONENTES SOLTOS
-export const inputCustom = ({ value = '', type = 'text', placeholder, id, hidden, tostring = true, label, required = true }) => {
+export const inputCustom = ({ value = '', type = 'text', placeholder, id, hidden, tostring = true, label, required = true, tamanho_max }) => {
   const string_html = `
     <div id="input-custom-${id}" class="input-container ${hidden ? 'hidden' : ''}">
-      <input type="${type}" id="input-${id}" name="${id}" ${required ? 'required=""' : ''} autocomplete="off" value="${value}">
+      <input type="${type}" id="input-${id}" name="${id}" ${required ? 'required=""' : ''} autocomplete="off" value="${value}" ${tamanho_max ? ('data-max-len="' + tamanho_max + '"') : ''}">
       <label for="input-${id}" class="label">${label || placeholder || ''}</label>
       <div class="underline"></div>
     </div>
+    <small id="input-custom-${id}-tamanho" class="${hidden || !tamanho_max ? 'hidden' : ''}">
+      ${value.length}/${tamanho_max}
+    </small>
   `;
-  //   const string_html = `
-  //   <div id="input-custom-${id}" class="input-custom ${hidden ? 'hidden' : ''}">
-  //     <input id="input-${id}" type="${type}" placeholder=" " name="${id}" autocomplete="off" value="${value}" ${required ? 'required=""' : ''} />
-  //     <label>${placeholder || label}</label>
-  //   </div>
-  // `;
 
   return tostring ? string_html : createElementFromString(string_html);
 }
@@ -134,10 +131,10 @@ export const cardContatoCadastro = ({ id, name = '', email = '', phone_number = 
   </div>
   <form id="formulario-cadastro" class="contato-form" action="">
     ${id ? inputCustom({ value: id, id: 'id', hidden: true, label: '#ID' }) : ''}
-    ${inputCustom({ value: image_url, id: 'image_url', label: 'Link da Imagem', hidden: !!id })}
-    ${inputCustom({ value: name, id: 'name', label: 'Nome' })}
-    ${inputCustom({ value: email, id: 'email', label: 'E-mail' })}
-    ${inputCustom({ value: phone_number, id: 'phone_number', label: 'n° Contato' })}
+    ${inputCustom({ value: image_url, id: 'image_url', label: 'Link da Imagem', hidden: !!id, tamanho_max: 500 })}
+    ${inputCustom({ value: name, id: 'name', label: 'Nome', tamanho_max: 50 })}
+    ${inputCustom({ value: email, id: 'email', label: 'E-mail', tamanho_max: 75 })}
+    ${inputCustom({ value: phone_number, id: 'phone_number', label: 'n° Contato', tamanho_max: 22 })}
     <div id="erro-requisicao" class="erro-requisicao"></div>
     <div class="contato-form-botoes">
       ${botaoCustom({ buttonType: 'submit', msg: 'salvar', type: 'success' })}

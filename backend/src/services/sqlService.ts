@@ -24,8 +24,8 @@ export const testConnection = async () => {
   }
 }
 
-export const NewQuery = async (query: string) => {
+export const NewQuery = async (query: string, args?: any[]) => {
   const c = await newConnection();
 
-  return await c.execute(query);
+  return await c.query(query, args);
 }
