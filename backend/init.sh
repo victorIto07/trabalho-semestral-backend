@@ -1,1 +1,1 @@
-sudo bun run src/app.ts
+sudo bun run ~/trabalho-semestral-backend/backend/src/app.ts
