@@ -17,7 +17,6 @@
     - [Listar](#listar)
     - [Obter contato](#obter-contato)
     - [Cadastrar contato](#cadastrar-contato)
-      - [Retorno esperado: Ok](#retorno-esperado-ok)
     - [Atualizar contato](#atualizar-contato)
     - [Remover contato](#remover-contato)
 - [Models do projeto](#models-do-projeto)
