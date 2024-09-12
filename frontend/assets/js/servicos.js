@@ -40,18 +40,20 @@ export const chamadaAPI = (
         })
       }
 
-      if (!usuario)
-        usuario = loginCache();
-
       // PRAPARAR REQUISICAO
       const requisicao_parametros = {
         method: metodo,
         uri: url,
         headers: {
-          "Content-Type": "application/json",
-          "authorization": usuario.token || ""
+          "Content-Type": "application/json"
         }
       };
+
+      if (!usuario)
+        usuario = loginCache();
+
+      if (usuario && usuario.token)
+        requisicao_parametros.headers["authorization"] = usuario.token;
 
       if (metodo != 'GET')
         requisicao_parametros['body'] = JSON.stringify(body);
