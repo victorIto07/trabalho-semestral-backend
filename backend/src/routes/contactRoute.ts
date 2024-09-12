@@ -4,9 +4,9 @@ import { createContact, deleteContact, getContact, getContacts, updateContact } 
 const contactRouter = Router();
 
 contactRouter.get('/', getContacts);
-
 contactRouter.get('/:id', getContact);
-contactRouter.post('/:id', createContact);
+
+contactRouter.post('/', createContact);
 contactRouter.put('/:id', updateContact);
 contactRouter.delete('/:id', deleteContact);
 

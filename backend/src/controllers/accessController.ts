@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { GenerateNewToken, GetPassword } from '../util';
+import { GenerateNewToken, GetPassword, GetUserToken } from '../util';
 import { User } from '../models/accessModel';
 import { v4 } from 'uuid';
 import { NewQuery } from '../services/sqlService';
@@ -23,7 +23,7 @@ export const Login = async (req: Request, res: Response) => {
     return
   }
 
-  const token = GenerateNewToken(user.id);
+  const token = GetUserToken(user.id);
 
   const res_data = { name: user.name, email: user.email, token };
   res.status(200).json(res_data);

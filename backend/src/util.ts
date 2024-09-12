@@ -14,3 +14,14 @@ export const GenerateNewToken = (id: string) => {
   UsersTokensValidation[token] = { user_id: id, valid_untill: addWeeks(now, 1) };
   return token;
 }
+
+export const GetUserToken = (id: string) => {
+  const now = new Date();
+
+  for (let [token, data] of Object.entries(UsersTokensValidation)) {
+    if (data.valid_untill > now)
+      return token;
+  }
+
+  return GenerateNewToken(id);
+}
