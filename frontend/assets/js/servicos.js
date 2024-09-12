@@ -1,7 +1,7 @@
 import { navigate, loginCache, wait } from './util.js';
 
 // const PREFIXO_ENDPOINT = 'http://localhost:8081';
-const PREFIXO_ENDPOINT = 'http://vitu.app.br';
+const PREFIXO_ENDPOINT = 'http://vitu.app.br:8080';
 
 // ENDPOINTS INFORMADOS NO DRIVE DO TRABALHO
 // | previnir chamadas a links invalidos
