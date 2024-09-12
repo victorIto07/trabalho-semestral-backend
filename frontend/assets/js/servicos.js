@@ -1,9 +1,10 @@
 import { navigate, loginCache, wait } from './util.js';
 
+// const PREFIXO_ENDPOINT = 'http://localhost:8081';
+const PREFIXO_ENDPOINT = 'http://vitu.app.br';
+
 // ENDPOINTS INFORMADOS NO DRIVE DO TRABALHO
 // | previnir chamadas a links invalidos
-const PREFIXO_ENDPOINT = 'http://localhost:8081';
-
 const SERVICOS = {
   'Login': { url: `${PREFIXO_ENDPOINT}/usuarios`, metodo: 'GET' },
   'BuscarContatos': { url: `${PREFIXO_ENDPOINT}/contact`, metodo: 'GET' },
