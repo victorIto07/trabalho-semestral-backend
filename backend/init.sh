@@ -1,1 +1,1 @@
-sudo npm run start
+sudo bun run src/app.ts
