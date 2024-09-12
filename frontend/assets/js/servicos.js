@@ -49,7 +49,7 @@ export const chamadaAPI = (
         uri: url,
         headers: {
           "Content-Type": "application/json",
-          "authorization": usuario.token
+          "authorization": usuario.token || ""
         }
       };
 
