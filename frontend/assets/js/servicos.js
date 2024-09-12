@@ -88,7 +88,7 @@ export const Login = async (email, password) => {
 
   const dados_login = await chamadaAPI('Login', null, { email, password });
   console.log(dados_login);
-  if (!dados_login.id) throw new Error('Email ou senha inválidos.');
+  if (!dados_login.token) throw new Error('Email ou senha inválidos.');
 
   console.log('cacheando usuario');
   localStorage.setItem('usuario_logado', JSON.stringify(dados_login))
