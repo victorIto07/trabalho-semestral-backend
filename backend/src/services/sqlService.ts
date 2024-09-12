@@ -1,4 +1,4 @@
-import { ConnectionOptions, createConnection } from "mysql2/promise";
+import { ConnectionOptions, createConnection, FieldPacket } from "mysql2/promise";
 
 
 const newConnection = async () => {
@@ -24,8 +24,8 @@ export const testConnection = async () => {
   }
 }
 
-export const NewQuery = async (query: string, args?: any[]) => {
+export const NewQuery = async<T>(query: string, args?: any[]): Promise<[T[], FieldPacket[]]> => {
   const c = await newConnection();
 
-  return await c.query(query, args);
+  return await c.query(query, args) as [T[], FieldPacket[]];
 }

@@ -20,9 +20,7 @@ const prepararForm = () => {
 
     try {
       const dados_logon = formData({ form: _form });
-      dados_logon['id'] = 100 + Math.floor(Math.random() * 400);
-
-      await Logon(dados_logon);
+      Logon(dados_logon);
     } catch (e) {
       console.error(e);
       _spinner_loader.remove();

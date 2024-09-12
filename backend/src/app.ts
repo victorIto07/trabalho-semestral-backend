@@ -1,17 +1,23 @@
 import express from 'express';
-import contactRouter from './routes/contactRoute';
-import { testConnection } from './services/sqlService';
-import { config } from 'dotenv';
 import cors from 'cors'
+import { config } from 'dotenv';
+
+import contactRouter from './routes/contactRoute';
+import accessRouter from './routes/accessRoute';
+
+import { testConnection } from './services/sqlService';
+import { ValidateAuth } from './middleware/autentication';
 
 config();
+
+const port = process.env.__APP_PORT__;
 const app = express();
-const port = 8080;
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/contact', contactRouter);
+app.use('/access', accessRouter);
+app.use('/contact', ValidateAuth, contactRouter);
 
 testConnection();
 

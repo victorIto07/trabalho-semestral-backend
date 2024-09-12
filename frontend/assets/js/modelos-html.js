@@ -40,7 +40,7 @@ export const headerCustom = (root = false) => createElementFromString(`
     <nav>
       <a href="/">
         <div class="header-icone">
-          <img src="${root ? '' : '../'}assets/img/favicon.ico" alt="" />
+          <img src="/assets/img/favicon.ico" alt="" />
           <h2>
             FecafBook
           </h2>
@@ -147,7 +147,7 @@ export const cardContatoCadastro = ({ id, name = '', email = '', phone_number = 
 export const loginCard = (tipo = 'login') => createElementFromString(`
   <div id="card-${tipo}" class="login">
     <div class="login-icone">
-      <img src="../assets/img/favicon.ico" alt="logo">
+      <img src="/assets/img/favicon.ico" alt="logo">
     </div>
     <div id="card" class="login-card">
       <div class="login-card-content">
@@ -156,8 +156,8 @@ export const loginCard = (tipo = 'login') => createElementFromString(`
         </h1>
         <form id="formulario-${tipo}" action="">
           ${inputCustom({ id: 'email', label: 'E-mail', type: 'email', tostring: true })}
-          ${inputCustom({ id: 'senha', label: 'Senha', type: 'password' })}
-          ${tipo == 'logon' ? inputCustom({ id: 'nome', label: 'Nome' }) : ''}
+          ${inputCustom({ id: 'password', label: 'Senha', type: 'password' })}
+          ${tipo == 'logon' ? inputCustom({ id: 'name', label: 'Nome' }) : ''}
           <div id="erro-requisicao" class="erro-requisicao"></div>
           <button type="submit" class="login-botao">
             ${tipo == 'login' ? 'Conectar' : 'Criar'}

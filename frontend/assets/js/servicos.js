@@ -6,7 +6,8 @@ const PREFIXO_ENDPOINT = 'http://vitu.app.br:8080';
 // ENDPOINTS INFORMADOS NO DRIVE DO TRABALHO
 // | previnir chamadas a links invalidos
 const SERVICOS = {
-  'Login': { url: `${PREFIXO_ENDPOINT}/usuarios`, metodo: 'GET' },
+  'Login': { url: `${PREFIXO_ENDPOINT}/access/login`, metodo: 'POST' },
+  'Logon': { url: `${PREFIXO_ENDPOINT}/access/logon`, metodo: 'POST' },
   'BuscarContatos': { url: `${PREFIXO_ENDPOINT}/contact`, metodo: 'GET' },
   'BuscarContato': { url: `${PREFIXO_ENDPOINT}/contact/{{id}}`, metodo: 'GET' },
   'CadastrarContato': { url: `${PREFIXO_ENDPOINT}/contact/{{id}}`, metodo: 'POST' },
@@ -20,7 +21,8 @@ const METODOS_VALIDOS = ['GET', 'POST', 'PUT', 'DELETE'];
 export const chamadaAPI = (
   servico,
   dados_url,
-  body
+  body,
+  usuario
 ) => {
   return new Promise(async (resolve, reject) => {
     let { url, metodo } = SERVICOS[servico]
@@ -38,24 +40,31 @@ export const chamadaAPI = (
         })
       }
 
+      if (!usuario)
+        usuario = loginCache();
+
       // PRAPARAR REQUISICAO
       const requisicao_parametros = {
         method: metodo,
         uri: url,
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": usuario.token
+        }
       };
 
-      if (metodo != 'GET') {
+      if (metodo != 'GET')
         requisicao_parametros['body'] = JSON.stringify(body);
-        requisicao_parametros['headers'] = {
-          "Content-Type": "application/json",
-        };
-      }
 
       const res = await fetch(url, requisicao_parametros);
       const json = await res.json();
 
       // RETORNAR ERRO SE CHAMADA NAO FOI OK
-      if (!json.status_code || json.status_code.toString()[0] == 2)
+      if (res.status == 403) {
+        localStorage.removeItem('usuario_logado');
+        navigate('/login')
+      }
+      else if (res.status >= 200 && res.status < 400)
         resolve(json);
       else
         reject(new Error(json.message));
@@ -68,30 +77,29 @@ export const chamadaAPI = (
 };
 
 // FAZER LOGIN E ARMAZENAR OS DADOS DO USUARIO NO LOCALSTORAGE PARA NAO PRECISAR DE LOGIN TODA HORA
-export const Login = async (email, senha) => {
+export const Login = async (email, password) => {
   const login_cache = loginCache();
   if (login_cache) {
     console.log('utilizando usuário logado no cache');
     navigate('/');
   }
 
-  const dados_login = await chamadaAPI('Login');
-  if (!dados_login || !dados_login.length) throw new Error('erro ao buscar dados para efetuar o login');
-
-  const login_valido = dados_login.find(f => f.email == email && f.senha == senha);
-  if (!login_valido) throw new Error('email ou senha inválidos');
+  const dados_login = await chamadaAPI('Login', null, { email, password });
+  console.log(dados_login);
+  if (!dados_login.id) throw new Error('Email ou senha inválidos.');
 
   console.log('cacheando usuario');
-  localStorage.setItem('usuario_logado', JSON.stringify(login_valido))
+  localStorage.setItem('usuario_logado', JSON.stringify(dados_login))
 
   navigate('/');
-  return login_valido;
+  return dados_login;
 }
 
 // CADASTRAR USUARIO TEMPORARIO
 export const Logon = async (dados_logon) => {
-  localStorage.setItem('usuario_logado', JSON.stringify(dados_logon));
-  await wait(1000);
+  const retorno_logon = await chamadaAPI('Logon', null, dados_logon);
+  console.log(retorno_logon);
+  localStorage.setItem('usuario_logado', JSON.stringify(retorno_logon));
   navigate('/');
 }
 

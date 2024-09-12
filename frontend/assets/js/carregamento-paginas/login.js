@@ -20,7 +20,7 @@ const prepararForm = () => {
 
     try {
       const dados_login = formData({ form: _form });
-      await Login(dados_login['email'], dados_login['senha']);
+      await Login(dados_login['email'], dados_login['password']);
     } catch (e) {
       document.getElementById('erro-requisicao').innerText = '* ' + e.message || e;
     }
