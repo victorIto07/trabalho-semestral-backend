@@ -1,3 +1,8 @@
+
+![logo](./assets/logo.png)
+
+---
+
 <!--toc:start-->
 - [Sobre o projeto](#sobre-o-projeto)
 - [Descrição das rotas](#descrição-das-rotas)
