@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { newQuery } from '../services/sqlService';
 import { Contact } from '../models/contactModel';
-import { v4 } from 'uuid';
 import { CreateContactQuery, DeleteContactQuery, GetContactQuery, GetContactsQuery, UpdateContactQuery } from '../models/sqlQueries';
-import { userCanEditContact, validateKeys } from '../util';
+import { newUUID, userCanEditContact, validateKeys } from '../util';
 
 export const getContacts = async (req: Request, res: Response) => {
   const [contacts] = await newQuery<Contact>(GetContactsQuery);
@@ -35,7 +34,7 @@ export const createContact = async (req: Request, res: Response) => {
   }
 
   const newContact: Contact = {
-    id: v4(),
+    id: newUUID(),
     name: req.body.name,
     phone_number: req.body.phone_number,
     email: req.body.email,

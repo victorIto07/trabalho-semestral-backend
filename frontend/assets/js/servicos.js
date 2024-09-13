@@ -1,4 +1,4 @@
-import { navigate, loginCache, wait } from './util.js';
+import { navigate, loginCache } from './util.js';
 
 // const PREFIXO_ENDPOINT = 'http://localhost:8081';
 const PREFIXO_ENDPOINT = 'http://vitu.app.br:8080';

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { generateNewToken, getPassword, getUserToken } from '../util';
+import { generateNewToken, getPassword, getUserToken, newUUID } from '../util';
 import { User } from '../models/accessModel';
-import { v4 } from 'uuid';
 import { newQuery } from '../services/sqlService';
 import { LoginQuery, LogonQuery } from '../models/sqlQueries';
 
@@ -39,7 +38,7 @@ export const logon = async (req: Request, res: Response) => {
     const password = getPassword(req.body.password);
 
     const newUser: User = {
-      id: v4(),
+      id: newUUID(),
       name: req.body.name,
       email: req.body.email,
       password_hash: password,

@@ -1,11 +1,12 @@
-import * as crypto from 'crypto';
 import { UsersTokensValidation } from './models/accessModel';
-import { addWeeks } from 'date-fns';
 import { newQuery } from './services/sqlService';
 import { GetContactQuery } from './models/sqlQueries';
 import { Contact } from './models/contactModel';
+import { createHash, randomUUID } from 'node:crypto';;
 
-export const encrypt = (str: string) => crypto.createHash('sha256').update(str).digest('base64')
+export const encrypt = (str: string) => createHash('sha256').update(str).digest('base64');
+
+export const newUUID = () => randomUUID() as string;
 
 export const getPassword = (password: string) => encrypt(password);
 
@@ -14,7 +15,7 @@ export const generateNewToken = (id: string) => {
 
   const token = encrypt(`${id}:${now.toISOString()}`)
 
-  UsersTokensValidation[token] = { userId: id, validUntill: addWeeks(now, 1) };
+  UsersTokensValidation[token] = { userId: id, validUntill: addDays(7) };
   return token;
 }
 
@@ -45,4 +46,13 @@ export const userCanEditContact = async (userId: string, contact_id: string, con
   if (!contact?.id) return false;
 
   return contact.user_created_by == userId;
+}
+
+export const addDays = (daysToAdd: number, date?: Date) => {
+  if (!date)
+    date = new Date();
+
+  date.setDate(date.getDate() + daysToAdd);
+
+  return date;
 }

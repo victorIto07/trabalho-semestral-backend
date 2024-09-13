@@ -1,14 +1,11 @@
 import express from 'express';
 import cors from 'cors'
-import { config } from 'dotenv';
 
 import contactRouter from './routes/contactRoute';
 import accessRouter from './routes/accessRoute';
 
 import { testConnection } from './services/sqlService';
 import { validateAuth } from './middleware/autentication';
-
-config();
 
 const port = process.env.__APP_PORT__;
 const app = express();
