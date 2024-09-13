@@ -6,7 +6,7 @@ import contactRouter from './routes/contactRoute';
 import accessRouter from './routes/accessRoute';
 
 import { testConnection } from './services/sqlService';
-import { ValidateAuth } from './middleware/autentication';
+import { validateAuth } from './middleware/autentication';
 
 config();
 
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/access', accessRouter);
-app.use('/contact', ValidateAuth, contactRouter);
+app.use('/contact', validateAuth, contactRouter);
 
 testConnection();
 

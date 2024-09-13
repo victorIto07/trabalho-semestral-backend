@@ -1,27 +1,48 @@
 import * as crypto from 'crypto';
 import { UsersTokensValidation } from './models/accessModel';
 import { addWeeks } from 'date-fns';
+import { newQuery } from './services/sqlService';
+import { GetContactQuery } from './models/sqlQueries';
+import { Contact } from './models/contactModel';
 
-export const Encrypt = (str: string) => crypto.createHash('sha256').update(str).digest('base64')
+export const encrypt = (str: string) => crypto.createHash('sha256').update(str).digest('base64')
 
-export const GetPassword = (password: string) => Encrypt(password);
+export const getPassword = (password: string) => encrypt(password);
 
-export const GenerateNewToken = (id: string) => {
+export const generateNewToken = (id: string) => {
   const now = new Date();
 
-  const token = Encrypt(`${id}:${now.toISOString()}`)
+  const token = encrypt(`${id}:${now.toISOString()}`)
 
-  UsersTokensValidation[token] = { user_id: id, valid_untill: addWeeks(now, 1) };
+  UsersTokensValidation[token] = { userId: id, validUntill: addWeeks(now, 1) };
   return token;
 }
 
-export const GetUserToken = (id: string) => {
+export const getUserToken = (id: string) => {
   const now = new Date();
 
   for (let [token, data] of Object.entries(UsersTokensValidation)) {
-    if (data.valid_untill > now)
+    if (data.userId == id && data.validUntill > now)
       return token;
   }
 
-  return GenerateNewToken(id);
+  return generateNewToken(id);
+}
+
+export const validateKeys = (obj: any, ...keys: string[]) => {
+  for (const key of keys) {
+    if (!obj[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export const userCanEditContact = async (userId: string, contact_id: string, contact?: Contact) => {
+  if (!contact)
+    [[contact]] = await newQuery<Contact>(GetContactQuery, [contact_id]);
+
+  if (!contact?.id) return false;
+
+  return contact.user_created_by == userId;
 }

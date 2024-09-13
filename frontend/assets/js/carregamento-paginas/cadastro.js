@@ -137,7 +137,7 @@ const prepararExclusao = (_id) => {
       await ExcluirContato(_id);
       navigate('/');
     } catch (e) {
-      console.error(e);
+      document.getElementById('erro-requisicao').innerText = '* ' + e.message || e;
     }
 
     _spinner_loader.remove();

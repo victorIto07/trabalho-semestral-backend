@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { Login, Logon } from '../controllers/accessController';
+import { login, logon } from '../controllers/accessController';
 
 const accessRouter = Router();
 
-accessRouter.post('/login', Login)
-accessRouter.post('/logon', Logon)
+accessRouter.post('/login', login)
+accessRouter.post('/logon', logon)
 
 
 export default accessRouter;

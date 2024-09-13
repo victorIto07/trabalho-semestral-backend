@@ -10,7 +10,7 @@ const SERVICOS = {
   'Logon': { url: `${PREFIXO_ENDPOINT}/access/logon`, metodo: 'POST' },
   'BuscarContatos': { url: `${PREFIXO_ENDPOINT}/contact`, metodo: 'GET' },
   'BuscarContato': { url: `${PREFIXO_ENDPOINT}/contact/{{id}}`, metodo: 'GET' },
-  'CadastrarContato': { url: `${PREFIXO_ENDPOINT}/contact/{{id}}`, metodo: 'POST' },
+  'CadastrarContato': { url: `${PREFIXO_ENDPOINT}/contact`, metodo: 'POST' },
   'AtualizarContato': { url: `${PREFIXO_ENDPOINT}/contact/{{id}}`, metodo: 'PUT' },
   'ExcluirContato': { url: `${PREFIXO_ENDPOINT}/contact/{{id}}`, metodo: 'DELETE' },
 }

@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { UsersTokensValidation } from '../models/accessModel';
 
-export const ValidateAuth = (req: Request, res: Response, next: NextFunction) => {
-
+export const validateAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers['authorization'];
 
   try {
@@ -13,12 +12,12 @@ export const ValidateAuth = (req: Request, res: Response, next: NextFunction) =>
 
     const now = new Date();
 
-    if (now > auth.valid_untill) {
+    if (now > auth.validUntill) {
       delete UsersTokensValidation[token];
       throw new Error('Expired token');
     }
 
-    req.body.user_id = auth.user_id;
+    req.body.userId = auth.userId;
 
     next();
   } catch (error: any) {

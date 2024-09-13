@@ -6,5 +6,5 @@ export type User = {
 };
 
 
-export type _UserTokenValidation = { [token: string]: { user_id: string, valid_untill: Date } };
+export type _UserTokenValidation = { [token: string]: { userId: string, validUntill: Date } };
 export const UsersTokensValidation: _UserTokenValidation = {};
