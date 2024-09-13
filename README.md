@@ -1,65 +1,66 @@
-
-![logo](./assets/logo.png)
+[<img src="./assets/logo.png" alt="Banner projeto">](http://vitu.app.br)
 
 ---
 
 <!--toc:start-->
-- [Sobre o projeto](#sobre-o-projeto)
-- [Descrição das rotas](#descrição-das-rotas)
-  - [Acesso](#acesso)
-  - [Contato](#contato)
-- [Usabilidade das rotas](#usabilidade-das-rotas)
-  - [Postman](#postman)
-  - [Acesso](#acesso)
-    - [Login](#login)
-    - [Cadastro](#cadastro)
-  - [Contato](#contato)
-    - [Listar](#listar)
-    - [Obter contato](#obter-contato)
-    - [Cadastrar contato](#cadastrar-contato)
-    - [Atualizar contato](#atualizar-contato)
+- [Sobre o projeto](#sobre-o-projeto-ℹ️)
+- [Descrição das rotas](#descrição-das-rotas-📫)
+  - [Acesso](#acesso-👤)
+  - [Contato](#contato-📒)
+- [Usabilidade das rotas](#usabilidade-das-rotas-🗺️)
+  - [Postman](#postman-🕺)
+  - [Acesso](#acesso-👤)
+    - [Login](#login-🚪)
+    - [Cadastro](#cadastro-📝)
+  - [Contato](#contato-📒)
+    - [Listar](#listar-👥)
+    - [Obter contato](#obter-contato-👤)
+    - [Cadastrar contato](#cadastrar-contato-️)
+    - [Atualizar contato](#atualizar-contato-📎)
     - [Remover contato](#remover-contato)
-- [Models do projeto](#models-do-projeto)
-  - [User](#user)
-  - [Contact](#contact)
+- [Models do projeto](#models-do-projeto-🔗)
+  - [User](#user-👤)
+  - [Contact](#contact-📒)
 - [Requisitos do trabalho](#requisitos-do-trabalho)
 <!--toc:end-->
 
-# Sobre o projeto
+# Sobre o projeto ℹ️
 
 Fecafbook é uma aplicação simples que permite aos usuários armazenar e compartilhar contatos em uma plataforma, funcionando como uma agenda pública. Todos os usuários têm acesso para visualizar os contatos cadastrados, mas apenas o criador de um contato específico pode editá-lo ou removê-lo.
 
 A API foi desenvolvida inteiramente em TypeScript, conforme solicitado, e utilizando bibliotecas que considerei necessárias. O frontend foi implementado usando a stack web padrão (HTML, CSS e JS), sem a utilização de frameworks ou pacotes CSS (como Tailwind, Bootstrap, etc.). O banco de dados escolhido foi o MySQL, por ser uma opção leve e familiar.
 
+**Importante sobre o frontend:**por se tratar de um trabalho de frontend, eu não me preocupei em fazer uma interface responsiva. Logo a interface não está preparada para uso mobile, apenas em PC 😉
+
 O projeto está hospedado em uma instância da AWS, incluindo todas as suas dependências.
 
 ---
 
-# Descrição das rotas
+# Descrição das rotas 📫
 
-## Acesso
+## Acesso 👤
 
 As rotas de acesso, identificadas pelo caminho "/access/*", são responsáveis pela autenticação e criação de usuários. Como o projeto requer controle de usuários, essas rotas gerenciam o login e cadastro dos mesmos. Os endpoints retornam os dados do usuário no formato [User](#user), juntamente com o token de autenticação da sessão. Este token deve ser incluído no cabeçalho das requisições para rotas que exijam autenticação.
 
 **Importante:** A autenticação foi implementada manualmente, sem o uso de bibliotecas especializadas. Um hash é armazenado localmente com uma data de expiração.
 
-## Contato
+## Contato 📒
 
 As rotas de contato, identificadas pelo caminho "/contact/*", são responsáveis pela manipulação dos contatos. Estas rotas exigem autenticação, e sem um token válido no cabeçalho da requisição, retornarão um erro 401 informando que o token é inválido.
 
 ---
 
-# Usabilidade das rotas
+# Usabilidade das rotas 🗺️
 
-## Postman
+## Postman 🕺
 
 Para facilitar a interação com a API, segue um link do Postman contendo os endpoints mencionados abaixo:
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/14884943-26ee4f66-969c-4ae6-8540-394e272442b0?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D14884943-26ee4f66-969c-4ae6-8540-394e272442b0%26entityType%3Dcollection%26workspaceId%3D5328b4f2-9d93-43a7-a8c9-bdd59591a39b)
 
-## Acesso
+## Acesso 👤
 
-### Login
+### Login 🚪
 
 #### Endpoint: /access/login
 
@@ -82,7 +83,7 @@ curl http://vitu.app.br:8080/access/login -X POST -d '{"email":"test_mail@mail.c
 }
 ```
 
-### Cadastro
+### Cadastro 📝
 
 #### Endpoint: /access/logon
 
@@ -105,9 +106,9 @@ curl http://vitu.app.br:8080/access/logon -X POST -d '{"name":"Test", "email":"t
 }
 ```
 
-## Contato
+## Contato 📒
 
-### Listar
+### Listar 👥
 
 #### Endpoint: /contact
 
@@ -140,7 +141,7 @@ curl http://vitu.app.br:8080/contact -X GET -H "authorization: eyJhbGciOiJIUzI1N
 ]
 ```
 
-### Obter contato
+### Obter contato 👤
 
 #### Endpoint: /contact/:id
 
@@ -164,7 +165,7 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X GET
 }
 ```
 
-### Cadastrar contato
+### Cadastrar contato ✏️
 
 #### Endpoint: /contact
 
@@ -186,7 +187,7 @@ curl http://vitu.app.br:8080/contact -X POST -H "authorization: eyJhbGciOiJIUzI1
 }
 ```
 
-### Atualizar contato
+### Atualizar contato 📎
 
 #### Endpoint: /contact/:id
 
@@ -208,7 +209,7 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X PUT
 }
 ```
 
-### Remover contato
+### Remover contato ❌
 
 #### Endpoint: /contact/:id
 
@@ -230,9 +231,9 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X DEL
 
 ---
 
-# Models do projeto
+# Models do projeto 🔗
 
-## User
+## User 👤
 
 ```json
 {
@@ -243,7 +244,7 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X DEL
 }
 ```
 
-## Contact
+## Contact 📒
 
 ```json
 {
@@ -257,7 +258,7 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X DEL
 
 ---
 
-# Requisitos do trabalho
+# Requisitos do trabalho ✅
 
 - [x] Backend totalmente em TypeScript
 - [x] Estrutura definida em camadas (services, routes, controllers...)
