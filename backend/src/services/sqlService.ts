@@ -17,15 +17,15 @@ export const testConnection = async () => {
   const c = await newConnection();
 
   try {
-    await c.connect()
+    await c.connect();
     console.log('Connection with the database succeeded.');
   } catch (error) {
-    console.log('Error to close connection with the database.')
+    console.log('Error to close connection with the database.');
   }
 }
 
-export const newQuery = async<T>(query: string, args?: any[]): Promise<[T[], FieldPacket[]]> => {
+export const newQuery = async<T>(query: string, args?: any[]): Promise<T[]> => {
   const c = await newConnection();
 
-  return await c.query(query, args) as [T[], FieldPacket[]];
+  return (await c.query(query, args) as [T[], FieldPacket[]])[0];
 }

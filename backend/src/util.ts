@@ -13,7 +13,7 @@ export const getPassword = (password: string) => encrypt(password);
 export const generateNewToken = (id: string) => {
   const now = new Date();
 
-  const token = encrypt(`${id}:${now.toISOString()}`)
+  const token = encrypt(`${id}:${now.toISOString()}`);
 
   UsersTokensValidation[token] = { userId: id, validUntill: addDays(7) };
   return token;
@@ -41,7 +41,7 @@ export const validateKeys = (obj: any, ...keys: string[]) => {
 
 export const userCanEditContact = async (userId: string, contact_id: string, contact?: Contact) => {
   if (!contact)
-    [[contact]] = await newQuery<Contact>(GetContactQuery, [contact_id]);
+    [contact] = await newQuery<Contact>(GetContactQuery, [contact_id]);
 
   if (!contact?.id) return false;
 

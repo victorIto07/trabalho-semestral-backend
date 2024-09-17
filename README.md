@@ -38,6 +38,15 @@ O projeto está hospedado em uma instância da AWS, incluindo todas as suas depe
 
 # Descrição das rotas 📫
 
+## Geral
+
+#### As requisições não funcionando podem indicar que o servidor está inativo
+
+#### Todas as requisições têm o header "Content-Type" sobrepostos para suportar requisições no formato JSON, logo
+
+- não é possível efetuar uma requisição que não seja em JSON;
+- não é necessário passar o header "Content-Type" para fazer as requisições pelo curl por exemplo;
+
 ## Acesso 👤
 
 As rotas de acesso, identificadas pelo caminho "/access/*", são responsáveis pela autenticação e criação de usuários. Como o projeto requer controle de usuários, essas rotas gerenciam o login e cadastro dos mesmos. Os endpoints retornam os dados do usuário no formato [User](#user), juntamente com o token de autenticação da sessão. Este token deve ser incluído no cabeçalho das requisições para rotas que exijam autenticação.

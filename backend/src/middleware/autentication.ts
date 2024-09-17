@@ -20,8 +20,8 @@ export const validateAuth = (req: Request, res: Response, next: NextFunction) =>
     req.body.userId = auth.userId;
 
     next();
-  } catch (error: any) {
-    res.status(403).json({ message: `Action forbidden: ${error.message}` });
+  } catch (e: any) {
+    res.status(403).json({ message: `Action forbidden: ${e.message}` });
   }
 
 }

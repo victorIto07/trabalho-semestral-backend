@@ -1,99 +1,79 @@
 import { Request, Response } from 'express';
-import { newQuery } from '../services/sqlService';
-import { Contact } from '../models/contactModel';
-import { CreateContactQuery, DeleteContactQuery, GetContactQuery, GetContactsQuery, UpdateContactQuery } from '../models/sqlQueries';
-import { newUUID, userCanEditContact, validateKeys } from '../util';
+import { getContacts as _getContacts, getContact as _getContact, createContact as _createContact, updateContact as _updateContact, deleteContact as _deleteContact } from '../services/contactService';
+import { userCanEditContact, validateKeys } from '../util';
 
 export const getContacts = async (req: Request, res: Response) => {
-  const [contacts] = await newQuery<Contact>(GetContactsQuery);
-
-  const _contacts = [];
-  for (const contact of contacts) {
-    _contacts.push({ ...contact, canEdit: await userCanEditContact(req.body.userId, contact.id, contact) });
-  }
-
-  res.json(_contacts);
+  const contacts = await _getContacts(req.body.userId);
+  res.json(contacts);
 };
 
 export const getContact = async (req: Request, res: Response) => {
   if (!validateKeys(req.params, 'id')) {
     res.status(400).json({ message: 'No contact id was provided' });
-    return
+    return;
   }
 
-  const contactId = req.params.id;
-
-  const [contact, _] = await newQuery<Contact>(GetContactQuery, [contactId]) as [Contact[], any];
-  res.json(contact[0]);
+  try {
+    const contact = await _getContact(req.params.id);
+    res.json(contact);
+  } catch (e: any) {
+    res.status(500).json({ message: e.message || e });
+  }
 };
 
 export const createContact = async (req: Request, res: Response) => {
   if (!validateKeys(req.body, 'name', 'phone_number', 'email', 'image_url')) {
     res.status(422).json({ message: 'Invalid payload' });
-    return
+    return;
   }
 
-  const newContact: Contact = {
-    id: newUUID(),
-    name: req.body.name,
-    phone_number: req.body.phone_number,
-    email: req.body.email,
-    image_url: req.body.image_url,
-    user_created_by: req.body.userId
-  };
-
   try {
-    await newQuery(CreateContactQuery, [newContact.id, newContact.name, newContact.phone_number, newContact.email, newContact.image_url, newContact.user_created_by]);
+    await _createContact(req.body);
     res.status(201).json({ ok: true });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message || error });
+  } catch (e: any) {
+    res.status(500).json({ message: e.message || e });
   }
 };
 
 export const updateContact = async (req: Request, res: Response) => {
   if (!validateKeys(req.params, 'id')) {
     res.status(400).json({ message: 'No contact id was provided' });
-    return
+    return;
   }
-
-  const contactId = req.params.id;
 
   if (!validateKeys(req.body, 'name', 'phone_number', 'email', 'image_url')) {
     res.status(422).json({ message: 'Invalid payload' });
-    return
+    return;
   }
 
-  if (!await userCanEditContact(req.body.userId, contactId)) {
+  if (!await userCanEditContact(req.body.userId, req.params.id)) {
     res.status(400).json({ message: 'User cannot update this contact.' });
-    return
+    return;
   }
 
   try {
-    await newQuery(UpdateContactQuery, [req.body.name, req.body.phone_number, req.body.email, req.body.image_url, contactId]);
+    await _updateContact({ ...req.body, ...req.params });
     res.status(200).json({ ok: true });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message || error });
+  } catch (e: any) {
+    res.status(500).json({ message: e.message || e });
   }
 };
 
 export const deleteContact = async (req: Request, res: Response) => {
   if (!validateKeys(req.params, 'id')) {
     res.status(400).json({ message: 'No contact id was provided' });
-    return
+    return;
   }
 
-  const contactId = req.params.id;
-
-
-  if (!await userCanEditContact(req.body.userId, contactId)) {
+  if (!await userCanEditContact(req.body.userId, req.params.id)) {
     res.status(400).json({ message: 'User cannot delete this contact.' });
-    return
+    return;
   }
 
   try {
-    await newQuery(DeleteContactQuery, [contactId]);
+    await _deleteContact(req.params.id);
     res.status(200).send({ ok: true });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message || error });
+  } catch (e: any) {
+    res.status(500).json({ message: e.message || e });
   }
 };
