@@ -3,25 +3,26 @@
 ---
 
 <!--toc:start-->
-- [Sobre o projeto](#sobre-o-projeto-ℹ️)
-- [Descrição das rotas](#descrição-das-rotas-📫)
-  - [Acesso](#acesso-👤)
-  - [Contato](#contato-📒)
-- [Usabilidade das rotas](#usabilidade-das-rotas-🗺️)
-  - [Postman](#postman-🕺)
-  - [Acesso](#acesso-👤)
-    - [Login](#login-🚪)
-    - [Cadastro](#cadastro-📝)
-  - [Contato](#contato-📒)
-    - [Listar](#listar-👥)
-    - [Obter contato](#obter-contato-👤)
-    - [Cadastrar contato](#cadastrar-contato-️)
-    - [Atualizar contato](#atualizar-contato-📎)
-    - [Remover contato](#remover-contato)
-- [Models do projeto](#models-do-projeto-🔗)
-  - [User](#user-👤)
-  - [Contact](#contact-📒)
-- [Requisitos do trabalho](#requisitos-do-trabalho)
+- [Sobre o projeto ℹ️](#sobre-o-projeto-ℹ️)
+- [Informações das rotas 📫](#informações-das-rotas-📫)
+  - [Geral](#geral)
+  - [Acesso 👤](#acesso-👤)
+  - [Contato 📒](#contato-📒)
+- [Usabilidade das rotas 🗺️](#usabilidade-das-rotas-🗺️)
+  - [Postman 🕺](#postman-🕺)
+  - [Acesso 👤](#acesso-👤)
+    - [Login 🚪](#login-🚪)
+    - [Cadastro 📝](#cadastro-📝)
+  - [Contato 📒](#contato-📒)
+    - [Listar 👥](#listar-👥)
+    - [Obter contato 👤](#obter-contato-👤)
+    - [Cadastrar contato ✏️](#cadastrar-contato-️)
+    - [Atualizar contato 📎](#atualizar-contato-📎)
+    - [Remover contato ❌](#remover-contato)
+- [Models do projeto 🔗](#models-do-projeto-🔗)
+  - [User 👤](#user-👤)
+  - [Contact 📒](#contact-📒)
+- [Requisitos do trabalho ✅](#requisitos-do-trabalho)
 <!--toc:end-->
 
 # Sobre o projeto ℹ️
@@ -36,13 +37,13 @@ O projeto está hospedado em uma instância da AWS, incluindo todas as suas depe
 
 ---
 
-# Descrição das rotas 📫
+# Informações das rotas 📫
 
 ## Geral
 
 #### As requisições não funcionando podem indicar que o servidor está inativo
 
-#### Todas as requisições têm o header "Content-Type" sobrepostos para suportar requisições no formato JSON, logo
+#### Todas as requisições têm o header "Content-Type" sobrepostos para suportar requisições no formato JSON, logo:
 
 - não é possível efetuar uma requisição que não seja em JSON;
 - não é necessário passar o header "Content-Type" para fazer as requisições pelo curl por exemplo;
