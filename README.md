@@ -5,7 +5,7 @@
 <!--toc:start-->
 - [Sobre o projeto ℹ️](#sobre-o-projeto-ℹ️)
 - [Informações das rotas 📫](#informações-das-rotas-📫)
-  - [Geral](#geral)
+  - [Importante ❗](#importante)
   - [Acesso 👤](#acesso-👤)
   - [Contato 📒](#contato-📒)
 - [Usabilidade das rotas 🗺️](#usabilidade-das-rotas-🗺️)
@@ -31,17 +31,15 @@ Fecafbook é uma aplicação simples que permite aos usuários armazenar e compa
 
 A API foi desenvolvida inteiramente em TypeScript, conforme solicitado, e utilizando bibliotecas que considerei necessárias. O frontend foi implementado usando a stack web padrão (HTML, CSS e JS), sem a utilização de frameworks ou pacotes CSS (como Tailwind, Bootstrap, etc.). O banco de dados escolhido foi o MySQL, por ser uma opção leve e familiar.
 
-**Importante sobre o frontend:**por se tratar de um trabalho de frontend, eu não me preocupei em fazer uma interface responsiva. Logo a interface não está preparada para uso mobile, apenas em PC 😉
+**Importante sobre o frontend:** por se tratar de um trabalho de frontend, eu não me preocupei em fazer uma interface responsiva. Logo a interface não está preparada para uso mobile, apenas em PC 😉
 
-O projeto está hospedado em uma instância da AWS, incluindo todas as suas dependências.
+O projeto está hospedado em uma instância da AWS, incluindo todas as suas dependências e o banco de dados. Caso o banco de dados esteja inacessível, entre em contato pelo e-mail <victor.ito@a.fecaf.com.br>, pois o IP da instância é dinâmico e pode ter sido alterado, o que pode diferir da configuração do DNS.
 
 ---
 
 # Informações das rotas 📫
 
-## Geral
-
-#### As requisições não funcionando podem indicar que o servidor está inativo
+## Importante ❗
 
 #### Todas as requisições têm o header "Content-Type" sobrepostos para suportar requisições no formato JSON, logo:
 
@@ -50,9 +48,9 @@ O projeto está hospedado em uma instância da AWS, incluindo todas as suas depe
 
 ## Acesso 👤
 
-As rotas de acesso, identificadas pelo caminho "/access/*", são responsáveis pela autenticação e criação de usuários. Como o projeto requer controle de usuários, essas rotas gerenciam o login e cadastro dos mesmos. Os endpoints retornam os dados do usuário no formato [User](#user), juntamente com o token de autenticação da sessão. Este token deve ser incluído no cabeçalho das requisições para rotas que exijam autenticação.
+As rotas de acesso, identificadas pelo caminho "/access/*", são responsáveis pela autenticação e criação de usuários. Como o projeto requer controle de usuários, essas rotas gerenciam o login e cadastro dos mesmos. Os endpoints retornam os dados do usuário no formato [User](#user-👤), juntamente com o token de autenticação da sessão. Este token deve ser incluído no cabeçalho das requisições para rotas que exijam autenticação.
 
-**Importante:** A autenticação foi implementada manualmente, sem o uso de bibliotecas especializadas. Um hash é armazenado localmente com uma data de expiração.
+**Importante:** A autenticação foi implementada manualmente, sem o uso de bibliotecas especializadas. É apenas um hash é armazenado localmente vinculado à uma data de expiração e a um usuário.
 
 ## Contato 📒
 
@@ -76,9 +74,9 @@ Para facilitar a interação com a API, segue um link do Postman contendo os end
 
 #### Método: POST
 
-#### Payload esperado: Email e senha no formato [User](#user)
+#### Payload esperado: Email e senha no formato [User](#user-👤)
 
-#### Retorno esperado: Dados do usuário no formato [User](#user) + token de autenticação
+#### Retorno esperado: Dados do usuário no formato [User](#user-👤) + token de autenticação
 
 ```bash
 curl http://vitu.app.br:8080/access/login -X POST -d '{"email":"test_mail@mail.com", "password":"test1234"}'
@@ -99,9 +97,9 @@ curl http://vitu.app.br:8080/access/login -X POST -d '{"email":"test_mail@mail.c
 
 #### Método: POST
 
-#### Payload esperado: Dados do usuário no formato [User](#user)
+#### Payload esperado: Dados do usuário no formato [User](#user-👤)
 
-#### Retorno esperado: Dados do usuário no formato [User](#user) + token de autenticação
+#### Retorno esperado: Dados do usuário no formato [User](#user-👤) + token de autenticação
 
 ```bash
 curl http://vitu.app.br:8080/access/logon -X POST -d '{"name":"Test", "email":"test_mail@mail.com", "password":"test1234"}'
@@ -126,7 +124,7 @@ curl http://vitu.app.br:8080/access/logon -X POST -d '{"name":"Test", "email":"t
 
 #### Autenticação necessária
 
-#### Retorno esperado: Lista de contatos no formato [Contact](#contact)
+#### Retorno esperado: Lista de contatos no formato [Contact](#contact-📒)
 
 ```bash
 curl http://vitu.app.br:8080/contact -X GET -H "authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
@@ -159,7 +157,7 @@ curl http://vitu.app.br:8080/contact -X GET -H "authorization: eyJhbGciOiJIUzI1N
 
 #### Autenticação necessária
 
-#### Retorno esperado: Contato no formato [Contact](#contact)
+#### Retorno esperado: Contato no formato [Contact](#contact-📒)
 
 ```bash
 curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X GET -H "authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
@@ -183,7 +181,7 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X GET
 
 #### Autenticação necessária
 
-#### Payload esperado: Contato no formato [Contact](#contact) (o ID será gerado pela API)
+#### Payload esperado: Contato no formato [Contact](#contact-📒) (o ID será gerado pela API)
 
 #### Retorno esperado: Ok
 
@@ -205,7 +203,7 @@ curl http://vitu.app.br:8080/contact -X POST -H "authorization: eyJhbGciOiJIUzI1
 
 #### Autenticação necessária
 
-#### Payload esperado: Contato no formato [Contact](#contact)
+#### Payload esperado: Contato no formato [Contact](#contact-📒)
 
 #### Retorno esperado: Ok
 
@@ -275,4 +273,4 @@ curl http://vitu.app.br:8080/contact/9675a417-f4e1-4ec7-9fb0-4750cab4e47d -X DEL
 - [x] Autenticação
 - [x] Documentação da API
 - [x] Desenvolvimento de testes para os endpoints e módulos da API
-- [x] Interface simples que utilize a API (lunas-secret)
+- [x] Interface simples que utilize a API
