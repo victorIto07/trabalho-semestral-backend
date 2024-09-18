@@ -64,7 +64,7 @@ npm i
 npm run start
 ```
 
-#### **Note que o comando npm run start utiliza a flag --env-file para informar o arquivo de configuração. Essa flag é uma funcionalidade disponível a partir do Node 20.6.0+. Portanto, não é possível utilizar versões mais antigas do Node, como a 16.x.x ou 12.x.x.*
+#### Note que o comando *"npm run start"* utiliza a flag --env-file para informar o arquivo de configuração. Essa flag é uma funcionalidade disponível a partir do Node 20.6.0+. Portanto, não é possível utilizar versões mais antigas do Node, como a 16.x.x ou 12.x.x
 
 ---
 
