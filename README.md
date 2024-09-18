@@ -4,6 +4,7 @@
 
 <!--toc:start-->
 - [Sobre o projeto ℹ️](#sobre-o-projeto-ℹ️)
+- [Utilizando o projeto 💻](#utilizando-o-projeto-💻)
 - [Informações das rotas 📫](#informações-das-rotas-📫)
   - [Importante ❗](#importante)
   - [Acesso 👤](#acesso-👤)
@@ -37,11 +38,41 @@ O projeto está hospedado em uma instância da AWS, incluindo todas as suas depe
 
 ---
 
+# Utilizando o projeto 💻
+
+## Preparando o frontend 🖼️
+
+#### Por se tratar de um diretório com arquivos HTML estáticos, o frontend precisa de alguma ferramenta para servi-los. Utilize o *live-server* para essa tarefa
+
+```bash
+npm install -g live-server
+cd frontend
+live-server --port=80
+```
+
+---
+
+#### No arquivo */frontend/assets/js/servicos.js*, há uma variável chamada *"PREFIXO_ENDPOINT"* na 4ª linha, que define a rota em que as requisições serão efetuadas. Para utilizar a API em localhost, comente a linha onde o endpoint real está sendo utilizado e descomente a linha acima, onde se encontra o link com localhost. Caso contrário, as requisições feitas pela interface não passarão pela sua máquina
+
+## Preparando o backend 🚂
+
+#### A configuração da conexão com o banco de dados é feita utilizando o arquivo .env, localizado em */backend*. Portanto, é necessário iniciar o projeto estando no diretório */backend*. Caso contrário, o projeto não encontrará as configurações necessárias, resultando em erros. Siga as instruções abaixo
+
+```bash
+cd backend
+npm i
+npm run start
+```
+
+#### **Note que o comando npm run start utiliza a flag --env-file para informar o arquivo de configuração. Essa flag é uma funcionalidade disponível a partir do Node 20.6.0+. Portanto, não é possível utilizar versões mais antigas do Node, como a 16.x.x ou 12.x.x.*
+
+---
+
 # Informações das rotas 📫
 
 ## Importante ❗
 
-#### Todas as requisições têm o header "Content-Type" sobrepostos para suportar requisições no formato JSON, logo:
+#### Todas as requisições têm o header "Content-Type" sobrepostos para suportar requisições no formato JSON, logo
 
 - não é possível efetuar uma requisição que não seja em JSON;
 - não é necessário passar o header "Content-Type" para fazer as requisições pelo curl por exemplo;
